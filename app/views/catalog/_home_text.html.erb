@@ -1,0 +1,19 @@
+<div class="jumbotron text-center p-5 mb-4 bg-light rounded-3">
+  <h1 class="jumbotron-heading"><%= t('blacklight.welcome') %></h1>
+
+  <p class="lead">This serves as a customization of Blacklight in order to demonstrate a strategy for supporting efforts to offset and neutralize search result rankings for library catalog records containing terms which are specific to race, ethnicity, gender, sexual orientation, as well as those who have endured systemic and institutional oppression.</p>
+</div>
+
+<div id="getting-started">
+  <h2>Demonstrating the Catalog</h2>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+
+<script>
+  Blacklight.onLoad(function() {
+    $('#about .card-header').one('click', function() {
+      $($(this).data('target')).load($(this).find('a').attr('href'));
+    });
+  });
+</script>
