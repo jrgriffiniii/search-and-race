@@ -1,0 +1,13 @@
+---
+name: search_and_race
+services:
+  search_and_race_development_solr:
+    type: solr:8.4
+    portforward: true
+    app_mount: false
+    core: blacklight-core
+    config:
+      dir: "solr/conf"
+proxy:
+  search_and_race_development_solr:
+    - search-and-race.dev.solr.lndo.site:8983

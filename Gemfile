@@ -40,7 +40,20 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem "pry-byebug", "~> 3.10"
+  gem "solargraph", "~> 0.48"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "blacklight", "~> 7.33"
+
+group :development, :test do
+  gem 'solr_wrapper', '>= 0.3'
+end
+gem 'rsolr', '>= 1.0', '< 3'
+gem 'bootstrap', '~> 4.0'
+gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
+gem 'jquery-rails'
