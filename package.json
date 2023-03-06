@@ -1,7 +1,7 @@
 {
   "name": "search-and-race",
   "main": "index.js",
-  "repository": "https://github.com/jrgriffiniii/search-and-race.git",
+  "repository": "https://github.com/pulibrary/search-and-race.git",
   "author": "jrgriffiniii <1443986+jrgriffiniii@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
