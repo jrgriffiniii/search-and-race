@@ -1,0 +1,82 @@
+---
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.2.5
+
+executors:
+  search_and_race_executor:
+    docker:
+      - image: cimg/ruby:3.0.3-browsers
+        environment: &docker_env_default
+          BUNDLER_VERSION: 2.3.11
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
+    working_directory: ~/search_and_race
+
+commands:
+  yarn_install:
+    description: "Install the supported release of Yarn and install the package dependencies"
+    steps:
+      - restore_cache:
+          name: Restore the Yarn package dependencies from the cache
+          keys:
+            - search-and-race-yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install NPM Dependencies via Yarn
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: search-and-race-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+  yarn_lint:
+    description: "Lint the source code files using Prettier"
+    steps:
+      - attach_workspace:
+          at: "~/search_and_race"
+      - run:
+          name: Invoke Prettier
+          command: yarn prettier -c README.md .circleci/
+
+jobs:
+  build:
+    executor: search_and_race_executor
+    steps:
+      - attach_workspace:
+          at: "~/search_and_race"
+      - checkout
+      - run:
+          name: Check current version of node
+          command: node -v
+      - run:
+          name: Set Timezone to EST/EDT
+          command: echo 'America/New_York' = /etc/timezone
+      - run: sudo apt update
+      - yarn_install
+      - persist_to_workspace:
+          root: "~/search_and_race"
+          paths: "*"
+  lint:
+    executor: search_and_race_executor
+    steps:
+      - attach_workspace:
+          at: "~/search_and_race"
+      - checkout
+      - run:
+          name: Check current version of node
+          command: node -v
+      - run:
+          name: Set Timezone to EST/EDT
+          command: echo 'America/New_York' = /etc/timezone
+      - yarn_lint
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+      - lint:
+          requires:
+            - build
